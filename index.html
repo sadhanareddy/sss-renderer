@@ -1,12 +1,29 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>sss renderer</title>
-	<script type="text/javascript" src="https://cdn.rawgit.com/sadhanareddy/sss-renderer/c7b22e7e/sss-renderer.js"></script>
-</head>
 <body>
-<label>Enter url:</label>
-<input type="text" name="url"><br>
-<button>Renarrate</button>
+
+<input type="text" id="field1" value="Enter url"><br>
+
+<button onclick="getSss(url)">Renarrate</button>
+
+<p>A function is triggered when the button is clicked.</p>
+
+<script>
+url = document.getElementById("field1").value;
+
+function getSss(url){
+	var xhttp = new XMLHttpRequest();
+	xhttp.open("POST", "//localhost:5000/getSss", true); 
+	xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
+	xhttp.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+	xhttp.send(JSON.stringify({ "url": url }));
+	xhttp.onreadystatechange = function() {
+	    if (this.readyState == 4 && this.status == 200) {
+	        document.getElementsByTagName("body")[0].innerHTML = this.responseText;
+		}
+	};
+}
+</script>
+
 </body>
 </html>
